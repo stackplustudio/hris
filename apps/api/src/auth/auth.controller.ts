@@ -66,18 +66,24 @@ export class AuthController {
     const user = await this.prisma.user.findUnique({
       where: { id: targetId },
       include: {
+        tenant: true,
         employee: {
           include: { tenant: true }
         }
       }
     });
 
+    let tenantData = user?.employee?.tenant || user?.tenant;
+    if (!tenantData && user?.role === 'SUPER_ADMIN') {
+      tenantData = await this.prisma.tenant.findFirst({ where: { subdomain: 'stackplus' } });
+    }
+
     return {
       userId: user?.id,
       email: user?.email,
       role: user?.role,
       employee: user?.employee ? { id: user.employee.id, fullName: user.employee.fullName } : null,
-      tenant: user?.employee?.tenant ? { id: user.employee.tenant.id, name: user.employee.tenant.name } : null,
+      tenant: tenantData ? { id: tenantData.id, name: tenantData.name } : null,
     };
   }
 
