@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } f
 import { LeavesService } from './leaves.service';
 import { CreateLeaveDto } from './dto/create-leave.dto';
 import { UpdateLeaveDto } from './dto/update-leave.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'; // Proteksi wajib StackPlus
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @UseGuards(JwtAuthGuard)
 @Controller('leaves')
@@ -12,6 +12,15 @@ export class LeavesController {
   @Post()
   create(@Body() createLeaveDto: CreateLeaveDto) {
     return this.leavesService.create(createLeaveDto);
+  }
+
+  // Endpoint khusus saldo cuti: GET /leaves/balance?employeeId=...&tenantId=...
+  @Get('balance')
+  getBalance(
+    @Query('employeeId') employeeId: string,
+    @Query('tenantId') tenantId: string,
+  ) {
+    return this.leavesService.getBalance(employeeId, tenantId);
   }
 
   // Endpoint: GET /leaves?tenantId=123&status=PENDING

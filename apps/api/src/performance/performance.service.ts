@@ -15,9 +15,21 @@ export class PerformanceService {
   }
 
   // Untuk Karyawan melihat KPI miliknya sendiri
-  async findMyGoals(employeeId: string) {
+  async findMyGoals(userIdOrEmployeeId: string) {
+    const employee = await this.prisma.employee.findFirst({
+      where: {
+        OR: [
+          { id: userIdOrEmployeeId },
+          { userId: userIdOrEmployeeId },
+        ],
+      },
+    });
+
+    if (!employee) return [];
+
     return this.prisma.performanceGoal.findMany({
-      where: { employeeId },
+      where: { employeeId: employee.id },
+      include: { employee: true },
       orderBy: { createdAt: 'desc' },
     });
   }
@@ -33,6 +45,7 @@ export class PerformanceService {
         score: 0,
         status: 'ON_PROGRESS',
       },
+      include: { employee: true },
     });
   }
 
@@ -46,6 +59,7 @@ export class PerformanceService {
     return this.prisma.performanceGoal.update({
       where: { id },
       data: { score, status },
+      include: { employee: true },
     });
   }
 }

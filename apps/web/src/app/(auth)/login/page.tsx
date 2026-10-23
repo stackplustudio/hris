@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import { api } from "@/lib/axios";
@@ -52,20 +53,22 @@ export default function LoginPage() {
   return (
     <main className="min-h-screen w-full flex bg-[#0052FF] font-sans overflow-hidden">
       
-      {/* SISI KIRI: Branding / Hero Text (Mirip Pagedone) */}
+      {/* SISI KIRI: Branding / Hero Text */}
       <div className="hidden lg:flex lg:w-1/2 flex-col justify-between p-16 text-white relative">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0052FF] via-blue-600 to-[#1A1A1A] opacity-90 z-0"></div>
         
         {/* Logo StackPlus */}
         <div className="relative z-10">
-          <Image 
-            src="/logo.png" 
-            alt="StackPlus Studio" 
-            width={180} 
-            height={60} 
-            className="object-contain filter brightness-0 invert"
-            priority
-          />
+          <Link href="/">
+            <Image 
+              src="/logo.png" 
+              alt="StackPlus Studio" 
+              width={180} 
+              height={60} 
+              className="object-contain filter brightness-0 invert cursor-pointer"
+              priority
+            />
+          </Link>
         </div>
 
         {/* Teks Sambutan */}
@@ -114,7 +117,9 @@ export default function LoginPage() {
             <div className="space-y-1">
               <div className="flex justify-between items-center">
                 <label className="text-xs font-bold text-gray-700 uppercase tracking-wider">Password</label>
-                <a href="#" className="text-xs font-bold text-[#0052FF] hover:underline">Forgot Password?</a>
+                <Link href="/forgot-password" className="text-xs font-bold text-[#0052FF] hover:underline">
+                  Forgot Password?
+                </Link>
               </div>
               <input 
                 type="password" 
@@ -137,23 +142,21 @@ export default function LoginPage() {
 
           <div className="relative flex py-2 items-center">
             <div className="flex-grow border-t border-gray-200"></div>
-            <span className="flex-shrink mx-4 text-gray-400 text-xs font-bold uppercase tracking-wider">Or</span>
+            <span className="flex-shrink mx-4 text-gray-400 text-xs font-bold uppercase tracking-wider">Atau</span>
             <div className="flex-grow border-t border-gray-200"></div>
           </div>
 
-          {/* Social login button dummy */}
-          <div className="grid grid-cols-2 gap-4">
-            <button type="button" className="flex items-center justify-center gap-2 py-3 px-4 border border-gray-200 rounded-2xl font-bold text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-              🌐 Google
-            </button>
-            <button type="button" className="flex items-center justify-center gap-2 py-3 px-4 border border-gray-200 rounded-2xl font-bold text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-              📘 SSO
-            </button>
+          <div className="space-y-3 text-center">
+            <p className="text-sm font-medium text-gray-600">
+              Perusahaan baru?{" "}
+              <Link href="/register" className="text-[#0052FF] font-bold hover:underline">
+                Daftar Akun Perusahaan
+              </Link>
+            </p>
+            <p className="text-xs text-gray-400">
+              Karyawan belum punya akun? Hubungi Admin HRD perusahaan Anda.
+            </p>
           </div>
-
-          <p className="text-center text-sm font-medium text-gray-500 pt-2">
-            Belum punya akses? <span className="text-[#0052FF] font-bold cursor-pointer hover:underline">Hubungi HRD</span>
-          </p>
 
         </div>
       </div>

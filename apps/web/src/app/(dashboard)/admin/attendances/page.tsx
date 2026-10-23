@@ -19,33 +19,52 @@ export default function AdminAttendancesPage() {
   const [attendances, setAttendances] = useState<Attendance[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchAttendances = async () => {
+    const currentTenantId = session?.tenant?.id;
+    if (!currentTenantId) return;
+
+    try {
+      const response = await api.get(`/attendances?tenantId=${currentTenantId}`);
+      setAttendances(response.data);
+    } catch (error) {
+      toast.error('Gagal memuat log kehadiran');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchAttendances = async () => {
-      const currentTenantId = session?.tenant?.id;
-      if (!currentTenantId) return;
-
-      try {
-        const response = await api.get(`/attendances?tenantId=${currentTenantId}`);
-        setAttendances(response.data);
-      } catch (error) {
-        toast.error('Gagal memuat log kehadiran');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     if (!authLoading) fetchAttendances();
   }, [session, authLoading]);
+
+  // Koreksi manual status kehadiran oleh HR
+  const handleCorrection = async (id: string, currentStatus: string) => {
+    const newStatus = prompt('Koreksi status (Ketik: PRESENT, LATE, atau ABSENT):', currentStatus);
+    if (!newStatus) return;
+
+    const upperStatus = newStatus.toUpperCase().trim();
+    if (!['PRESENT', 'LATE', 'ABSENT'].includes(upperStatus)) {
+      return toast.error('Pilihan status tidak valid. Gunakan PRESENT, LATE, atau ABSENT.');
+    }
+
+    try {
+      await api.patch(`/attendances/${id}`, { status: upperStatus });
+      toast.success(`Status absensi berhasil dikoreksi menjadi ${upperStatus}`);
+      fetchAttendances();
+    } catch (error) {
+      toast.error('Gagal mengoreksi data absensi');
+    }
+  };
 
   if (authLoading) return null;
 
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-10">
       
-      <div className="bg-white/40 backdrop-blur-xl border border-white/50 p-8 rounded-[2rem] shadow-[0_8px_32px_0_rgba(31,38,135,0.05)] flex justify-between items-center">
+      <div className="bg-white/40 backdrop-blur-xl border border-white/50 p-8 rounded-[2rem] shadow-[0_8px_32px_0_rgba(31,38,135,0.05)] flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-extrabold text-[#1A1A1A] tracking-tight">Log Kehadiran</h1>
-          <p className="text-gray-600 font-medium mt-1">Pantau rekam jejak presensi harian seluruh karyawan Anda.</p>
+          <p className="text-gray-600 font-medium mt-1">Pantau dan koreksi rekam jejak presensi harian seluruh karyawan Anda.</p>
         </div>
         <div className="bg-white/60 px-6 py-3 rounded-xl border border-white/80 font-bold text-[#0052FF]">
           Hari ini: {new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
@@ -62,16 +81,17 @@ export default function AdminAttendancesPage() {
                 <th className="p-6 font-bold">Check-In</th>
                 <th className="p-6 font-bold">Check-Out</th>
                 <th className="p-6 font-bold">Status</th>
+                <th className="p-6 font-bold text-right">Aksi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/40">
               {isLoading ? (
                 <tr>
-                  <td colSpan={5} className="p-12 text-center text-gray-500 font-bold">Menyinkronkan data presensi...</td>
+                  <td colSpan={6} className="p-12 text-center text-gray-500 font-bold">Menyinkronkan data presensi...</td>
                 </tr>
               ) : attendances.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="p-12 text-center text-gray-500 font-bold">Belum ada rekam kehadiran yang tercatat.</td>
+                  <td colSpan={6} className="p-12 text-center text-gray-500 font-bold">Belum ada rekam kehadiran yang tercatat.</td>
                 </tr>
               ) : (
                 attendances.map((record) => (
@@ -82,7 +102,7 @@ export default function AdminAttendancesPage() {
                     </td>
                     <td className="p-6">
                       <span className="font-bold text-[#0052FF] bg-[#0052FF]/10 px-3 py-1 rounded-lg">
-                        {new Date(record.checkIn).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}
+                        {record.checkIn ? new Date(record.checkIn).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) : '-'}
                       </span>
                     </td>
                     <td className="p-6">
@@ -102,6 +122,14 @@ export default function AdminAttendancesPage() {
                       }`}>
                         {record.status === 'PRESENT' ? 'HADIR' : record.status}
                       </span>
+                    </td>
+                    <td className="p-6 text-right">
+                      <button
+                        onClick={() => handleCorrection(record.id, record.status)}
+                        className="px-3 py-1.5 bg-white/70 hover:bg-[#0052FF] text-[#1A1A1A] hover:text-white rounded-xl font-bold border border-white/80 transition-all text-xs"
+                      >
+                        Koreksi
+                      </button>
                     </td>
                   </tr>
                 ))

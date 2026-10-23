@@ -2,9 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } f
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'; // Sesuai aturan boilerplate
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
-@UseGuards(JwtAuthGuard) // Wajib diproteksi JWT
+@UseGuards(JwtAuthGuard)
 @Controller('employees')
 export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) {}
@@ -12,6 +12,14 @@ export class EmployeesController {
   @Post()
   create(@Body() createEmployeeDto: CreateEmployeeDto) {
     return this.employeesService.create(createEmployeeDto);
+  }
+
+  // EMP-06: Endpoint Bulk Import Karyawan
+  @Post('bulk')
+  createBulk(
+    @Body() body: { tenantId: string; employees: CreateEmployeeDto[] }
+  ) {
+    return this.employeesService.createBulk(body.tenantId, body.employees);
   }
 
   // Endpoint: GET /employees?tenantId=xxxx
