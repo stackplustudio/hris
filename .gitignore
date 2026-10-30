@@ -34,4 +34,7 @@ coverage
 next-env.d.ts
 "@
 
+# Documentation
+/docs
+
 Set-Content -Path ".gitignore" -Value $ignoreContent -Force
