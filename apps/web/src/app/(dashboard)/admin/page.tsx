@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { CalendarCheck2, FileSpreadsheet, UserPlus, WalletCards } from 'lucide-react';
 import { api } from '@/lib/axios';
 import toast from 'react-hot-toast';
 import { useAuth } from '@/hooks/useAuth';
@@ -65,7 +66,7 @@ export default function AdminDashboardPage() {
         <div>
           <p className="text-sm font-bold text-[#0052FF] tracking-widest uppercase mb-1">Pusat Kendali HR — {tenantName}</p>
           <h1 className="text-4xl font-extrabold text-[#1A1A1A] tracking-tight">
-            Selamat datang, Tim HRD! 🚀
+            Selamat datang, Tim HRD
           </h1>
           <p className="text-gray-600 font-medium mt-1">Berikut adalah ringkasan aktivitas, audit log, dan kehadiran karyawan perusahaan hari ini.</p>
         </div>
@@ -144,7 +145,7 @@ export default function AdminDashboardPage() {
                 href="/admin/employees/new" 
                 className="p-5 bg-white/50 hover:bg-[#0052FF] text-[#1A1A1A] hover:text-white rounded-2xl border border-white/80 font-bold transition-all text-center flex flex-col items-center justify-center gap-2 group shadow-sm"
               >
-                <span className="text-2xl group-hover:scale-110 transition-transform">👤+</span>
+                <UserPlus aria-hidden="true" size={24} strokeWidth={1.8} />
                 <span>Tambah Karyawan</span>
               </Link>
 
@@ -152,7 +153,7 @@ export default function AdminDashboardPage() {
                 href="/admin/leaves" 
                 className="p-5 bg-white/50 hover:bg-[#0052FF] text-[#1A1A1A] hover:text-white rounded-2xl border border-white/80 font-bold transition-all text-center flex flex-col items-center justify-center gap-2 group shadow-sm"
               >
-                <span className="text-2xl group-hover:scale-110 transition-transform">📋</span>
+                <CalendarCheck2 aria-hidden="true" size={24} strokeWidth={1.8} />
                 <span>Tinjau Cuti</span>
               </Link>
 
@@ -160,7 +161,7 @@ export default function AdminDashboardPage() {
                 href="/admin/payroll" 
                 className="p-5 bg-white/50 hover:bg-[#0052FF] text-[#1A1A1A] hover:text-white rounded-2xl border border-white/80 font-bold transition-all text-center flex flex-col items-center justify-center gap-2 group shadow-sm"
               >
-                <span className="text-2xl group-hover:scale-110 transition-transform">💰</span>
+                <WalletCards aria-hidden="true" size={24} strokeWidth={1.8} />
                 <span>Hitung Gaji</span>
               </Link>
 
@@ -168,7 +169,7 @@ export default function AdminDashboardPage() {
                 href="/admin/reports" 
                 className="p-5 bg-white/50 hover:bg-[#0052FF] text-[#1A1A1A] hover:text-white rounded-2xl border border-white/80 font-bold transition-all text-center flex flex-col items-center justify-center gap-2 group shadow-sm"
               >
-                <span className="text-2xl group-hover:scale-110 transition-transform">📊</span>
+                <FileSpreadsheet aria-hidden="true" size={24} strokeWidth={1.8} />
                 <span>Unduh Laporan</span>
               </Link>
             </div>

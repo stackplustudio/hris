@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { HeartPulse, Info, ReceiptText } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { api } from '@/lib/axios';
 import { useAuth } from '@/hooks/useAuth';
@@ -72,7 +73,9 @@ export default function AdminTaxesPage() {
         {/* Card BPJS */}
         <div className="bg-white/30 backdrop-blur-xl border border-white/60 p-8 rounded-[2rem] shadow-sm">
           <h2 className="text-xl font-bold text-[#1A1A1A] mb-6 flex items-center gap-3">
-            <span className="p-2 bg-green-500/20 text-green-600 rounded-lg">🏥</span>
+            <span className="p-2 bg-green-500/20 text-green-600 rounded-lg">
+              <HeartPulse aria-hidden="true" size={20} strokeWidth={1.8} />
+            </span>
             Potongan BPJS (Karyawan)
           </h2>
           
@@ -101,7 +104,9 @@ export default function AdminTaxesPage() {
         {/* Card PPh21 */}
         <div className="bg-white/30 backdrop-blur-xl border border-white/60 p-8 rounded-[2rem] shadow-sm">
           <h2 className="text-xl font-bold text-[#1A1A1A] mb-6 flex items-center gap-3">
-            <span className="p-2 bg-blue-500/20 text-[#0052FF] rounded-lg">📄</span>
+            <span className="p-2 bg-blue-500/20 text-[#0052FF] rounded-lg">
+              <ReceiptText aria-hidden="true" size={20} strokeWidth={1.8} />
+            </span>
             Konfigurasi PPh 21 (TER)
           </h2>
           
@@ -118,7 +123,10 @@ export default function AdminTaxesPage() {
             </div>
             
             <div className="p-4 bg-[#0052FF]/5 border border-[#0052FF]/20 rounded-xl">
-              <p className="text-sm font-bold text-[#0052FF]">ℹ️ Info Sistem</p>
+              <p className="text-sm font-bold text-[#0052FF] flex items-center gap-2">
+                <Info aria-hidden="true" size={16} strokeWidth={1.8} />
+                Info Sistem
+              </p>
               <p className="text-xs text-gray-600 mt-1">Sistem akan secara otomatis menerapkan Tarif Efektif Rata-rata (TER) pada perhitungan Payroll bulanan berdasarkan status PTKP karyawan.</p>
             </div>
           </div>

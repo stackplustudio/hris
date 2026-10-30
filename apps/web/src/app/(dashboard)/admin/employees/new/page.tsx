@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { FileText, IdCard, ReceiptText } from 'lucide-react';
 import { api } from '@/lib/axios';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
@@ -173,7 +174,7 @@ export default function NewEmployeePage() {
               {/* Berkas Kontrak Kerja */}
               <div className="bg-white/40 border border-dashed border-gray-300 rounded-2xl p-5 text-center space-y-3">
                 <div className="w-10 h-10 bg-blue-50 text-[#0052FF] rounded-xl flex items-center justify-center font-bold mx-auto text-lg">
-                  📄
+                  <FileText aria-hidden="true" size={20} strokeWidth={1.8} />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-gray-800">Surat Perjanjian Kerja</p>
@@ -197,7 +198,7 @@ export default function NewEmployeePage() {
               {/* Berkas KTP */}
               <div className="bg-white/40 border border-dashed border-gray-300 rounded-2xl p-5 text-center space-y-3">
                 <div className="w-10 h-10 bg-green-50 text-green-600 rounded-xl flex items-center justify-center font-bold mx-auto text-lg">
-                  🪪
+                  <IdCard aria-hidden="true" size={20} strokeWidth={1.8} />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-gray-800">Scan / Foto KTP</p>
@@ -221,7 +222,7 @@ export default function NewEmployeePage() {
               {/* Berkas NPWP */}
               <div className="bg-white/40 border border-dashed border-gray-300 rounded-2xl p-5 text-center space-y-3">
                 <div className="w-10 h-10 bg-yellow-50 text-yellow-600 rounded-xl flex items-center justify-center font-bold mx-auto text-lg">
-                  📑
+                  <ReceiptText aria-hidden="true" size={20} strokeWidth={1.8} />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-gray-800">Kartu NPWP</p>

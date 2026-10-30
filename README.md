@@ -71,23 +71,20 @@ Pastikan Anda menggunakan pnpm. Jalankan perintah ini di direktori root:
 pnpm install
 ```
 
-### 3. Konfigurasi Environment Variables (.env)
+### 3. Konfigurasi Environment Variables
 
-Anda perlu mengatur variabel lingkungan untuk Backend dan Frontend.
+Gunakan [`.env.example`](./.env.example) sebagai daftar lengkap variabel yang diperlukan.
+Salin nilai yang sesuai ke file berikut (jangan menyalin placeholder apa adanya):
 
-**Backend (`apps/api/.env`):**
+- `apps/api/.env`: konfigurasi API, termasuk `DATABASE_URL`, rahasia JWT, `PORT`,
+  `NODE_ENV`, dan `CORS_ORIGINS`.
+- `apps/web/.env.local`: `NEXT_PUBLIC_API_URL` untuk alamat API.
+- `packages/database/.env`: `DATABASE_URL` dan `DIRECT_URL` untuk perintah Prisma
+  yang dijalankan dari package database.
 
-```env
-# Contoh menggunakan PostgreSQL atau MySQL
-DATABASE_URL="postgresql://user:password@localhost:5432/namadatabase?schema=public"
-JWT_SECRET="rahasia_super_kuat_stackplus_123!"
-```
-
-**Frontend (`apps/web/.env.local`):**
-
-```env
-NEXT_PUBLIC_API_URL="http://localhost:3001"
-```
+Gunakan URL PostgreSQL untuk `DATABASE_URL` dan `DIRECT_URL`. Isi secret JWT
+dengan dua nilai acak yang berbeda; jangan gunakan nilai contoh pada production.
+Untuk deployment, atur variabel yang sama pada konfigurasi environment platform.
 
 ### 4. Setup Database (Prisma)
 

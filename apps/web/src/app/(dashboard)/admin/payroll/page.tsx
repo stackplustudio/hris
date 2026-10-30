@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Printer } from 'lucide-react';
 import { api } from '@/lib/axios';
 import toast from 'react-hot-toast';
 import { useAuth } from '@/hooks/useAuth';
@@ -217,7 +218,8 @@ export default function AdminPayrollPage() {
                 onClick={handlePrintSlip}
                 className="px-8 py-3 bg-[#0052FF] hover:bg-blue-600 text-white font-bold rounded-2xl text-sm transition-all shadow-lg shadow-blue-500/20 flex items-center gap-2"
               >
-                🖨️ Cetak / Simpan PDF
+                <Printer aria-hidden="true" size={16} />
+                Cetak / Simpan PDF
               </button>
             </div>
 

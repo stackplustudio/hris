@@ -237,7 +237,7 @@ export default function EmployeeDashboard() {
         <div>
           <p className="text-sm font-bold text-[#0052FF] tracking-widest uppercase mb-1">{roleName}</p>
           <h1 className="text-4xl font-extrabold text-[#1A1A1A] tracking-tight">
-            Selamat datang, {employeeName.split(' ')[0]}! ✨
+            Selamat datang, {employeeName.split(' ')[0]}
           </h1>
         </div>
         <div className="text-right hidden md:block">
@@ -263,11 +263,11 @@ export default function EmployeeDashboard() {
                     ? 'bg-green-50 text-green-700 border-green-200'
                     : 'bg-blue-50 text-blue-700 border-blue-200'
                 }`}>
-                  📍 {currentGps.isWithinOffice ? 'Dalam Radius Kantor' : `${(currentGps.distanceMeters / 1000).toFixed(1)} km (WFH)`}
+                  {currentGps.isWithinOffice ? 'Dalam radius kantor' : `${(currentGps.distanceMeters / 1000).toFixed(1)} km (WFH)`}
                 </span>
               ) : (
                 <span className="px-3 py-1 bg-gray-50 text-gray-500 rounded-full text-xs font-bold border border-gray-200">
-                  📍 Mencari Lokasi...
+                  Mencari lokasi...
                 </span>
               )}
             </div>
@@ -275,16 +275,16 @@ export default function EmployeeDashboard() {
             {/* Status Hari Ini Banner */}
             <div className="mb-6 p-4 rounded-2xl bg-white/40 border border-white/60 text-sm relative z-10">
               {!hasCheckedIn ? (
-                <p className="font-bold text-gray-700">⏳ Anda belum melakukan check-in hari ini.</p>
+                <p className="font-bold text-gray-700">Anda belum melakukan check-in hari ini.</p>
               ) : !hasCheckedOut ? (
                 <div>
-                  <p className="font-bold text-green-700">🟢 Masuk: <span className="underline">{checkInTimeStr}</span> (Aktif Bertugas)</p>
+                  <p className="font-bold text-green-700">Masuk: <span className="underline">{checkInTimeStr}</span> (Aktif bertugas)</p>
                   {todayAttendance?.location && (
-                    <p className="text-xs text-gray-500 font-medium mt-1">📍 {todayAttendance.location}</p>
+                    <p className="text-xs text-gray-500 font-medium mt-1">{todayAttendance.location}</p>
                   )}
                 </div>
               ) : (
-                <p className="font-bold text-[#0052FF]">✅ Selesai: Masuk {checkInTimeStr} — Pulang {checkOutTimeStr}</p>
+                <p className="font-bold text-[#0052FF]">Selesai: Masuk {checkInTimeStr} — Pulang {checkOutTimeStr}</p>
               )}
             </div>
 
@@ -394,7 +394,7 @@ export default function EmployeeDashboard() {
                 disabled={isSubmitting}
                 className="w-full py-5 bg-[#1A1A1A] hover:bg-black text-white font-bold rounded-2xl text-lg hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-70"
               >
-                {isSubmitting ? 'Mengirim Pengajuan...' : 'Kirim Pengajuan Cuti ✈️'}
+                {isSubmitting ? 'Mengirim pengajuan...' : 'Kirim pengajuan cuti'}
               </button>
             </form>
           </div>

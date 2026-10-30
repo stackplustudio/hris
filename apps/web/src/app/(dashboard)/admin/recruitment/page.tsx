@@ -125,7 +125,7 @@ export default function AdminRecruitmentPage() {
                         onClick={() => handleMoveStage(c.id, stageName)}
                         className="absolute bottom-4 right-4 text-xs font-bold bg-[#1A1A1A] text-white px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
                       >
-                        Lanjut ➡️
+                        Lanjut
                       </button>
                     )}
                   </div>

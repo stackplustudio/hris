@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { CalendarDays } from 'lucide-react';
 import { api } from '@/lib/axios';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -66,7 +67,7 @@ export default function EmployeeLeavesPage() {
               ) : leaves.length === 0 ? (
                 <tr>
                   <td colSpan={4} className="p-12 text-center text-gray-500 font-bold">
-                    <div className="text-4xl mb-4">🏝️</div>
+                    <CalendarDays aria-hidden="true" className="mx-auto mb-4 text-brand-ink-muted" size={40} strokeWidth={1.6} />
                     Anda belum pernah mengajukan cuti.
                   </td>
                 </tr>
